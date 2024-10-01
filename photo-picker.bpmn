@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="eed7a16" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <bpmn:process id="Process_0qv9p5i" name="photo-picker" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_0vqf35z</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0vqf35z" sourceRef="StartEvent_1" targetRef="Activity_1rkjov1" />
+    <bpmn:endEvent id="Event_12otqr9" name="End">
+      <bpmn:incoming>Flow_155liep</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1ifmndy" sourceRef="Activity_1rkjov1" targetRef="Activity_0ewu566" />
+    <bpmn:userTask id="Activity_1rkjov1" name="Photo type selection">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="Form_07uihrj" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vqf35z</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ifmndy</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_155liep" sourceRef="Activity_0ewu566" targetRef="Event_12otqr9" />
+    <bpmn:serviceTask id="Activity_0ewu566" name="Fetch a photo">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="worker-photo-picker" retries="2" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=select_je20h9" target="photo_type" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ifmndy</bpmn:incoming>
+      <bpmn:outgoing>Flow_155liep</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0qv9p5i">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="150" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="156" y="143" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12otqr9_di" bpmnElement="Event_12otqr9">
+        <dc:Bounds x="542" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="550" y="143" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pfmaqk_di" bpmnElement="Activity_1rkjov1">
+        <dc:Bounds x="220" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11dw9p4_di" bpmnElement="Activity_0ewu566">
+        <dc:Bounds x="380" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0vqf35z_di" bpmnElement="Flow_0vqf35z">
+        <di:waypoint x="186" y="118" />
+        <di:waypoint x="220" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ifmndy_di" bpmnElement="Flow_1ifmndy">
+        <di:waypoint x="320" y="118" />
+        <di:waypoint x="380" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_155liep_di" bpmnElement="Flow_155liep">
+        <di:waypoint x="480" y="118" />
+        <di:waypoint x="542" y="118" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

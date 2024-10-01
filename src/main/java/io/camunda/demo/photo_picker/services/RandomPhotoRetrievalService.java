@@ -18,13 +18,11 @@ import java.io.IOException;
 @Component
 public class RandomPhotoRetrievalService {
     private MongoDatabaseFactory mongoDatabaseFactory;
-
     private final static Logger LOG = LoggerFactory.getLogger(RandomPhotoRetrievalService.class);
     private final String HTTP_URL_CAT = "https://placekitten.com/%d/%d",
     HTTP_URL_DOG = "https://place.dog/%d/%d",
     HTTP_URL_BEAR = "https://placebear.com/%d/%d";
     private HTTPClient httpClient;
-    // Constructor injection for MongoDatabaseFactory
     public RandomPhotoRetrievalService(MongoDatabaseFactory mongoDatabaseFactory) {
         this.mongoDatabaseFactory = mongoDatabaseFactory;
         this.httpClient = new HTTPClient();
@@ -43,7 +41,6 @@ public class RandomPhotoRetrievalService {
         }
     }
 
-    // Method to save image to MongoDB GridFS
     private void saveImageToMongoDB(String imageName, byte[] imageBytes) throws IOException {
 
         GridFSBucket gridFSBucket = GridFSBuckets.create(mongoDatabaseFactory.getMongoDatabase());
